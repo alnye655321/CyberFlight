@@ -14,8 +14,6 @@ void ARescueZone::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "RescueZoneBegin");
-
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ARescueZone::OnBoxOverlap); // on the overlap
 
 	//TSet<AActor*> OverlappingPawns;

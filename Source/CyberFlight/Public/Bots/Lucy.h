@@ -34,6 +34,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		AActor* TargetActor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
+		bool PlayingMontage;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

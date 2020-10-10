@@ -13,6 +13,7 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Bool.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType_String.h"
 #include <Engine.h>
 
 
@@ -30,6 +31,7 @@ APassengerAIController::APassengerAIController()
 	BoardingKeyName = "Boarding";
 	ClimbingKeyName = "Climbing";
 	GrapplingKeyName = "Grappling";
+	BoardingStatusKeyName = "BoardingStatus";
 
 
 	/* Initializes PlayerState so we can assign a team index to AI */
@@ -299,6 +301,26 @@ void APassengerAIController::SetGrappling(bool NewGrappling)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsBool(GrapplingKeyName, NewGrappling);
+	}
+}
+
+FString APassengerAIController::GetBoardingStatus()
+{
+	if (BlackboardComp)
+	{
+		return BlackboardComp->GetValueAsString(BoardingStatusKeyName);
+	}
+	else
+	{
+		return "";
+	}
+}
+
+void APassengerAIController::SetBoardingStatus(FString NewBoardingStatus)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsString(BoardingStatusKeyName, NewBoardingStatus);
 	}
 }
 

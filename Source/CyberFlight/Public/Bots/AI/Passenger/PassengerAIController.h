@@ -53,6 +53,9 @@ class CYBERFLIGHT_API APassengerAIController : public AAIController
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName GrapplingKeyName;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName BoardingStatusKeyName;
+
 public:
 
 	//AActor* GetTargetActor() const;
@@ -94,6 +97,10 @@ public:
 	bool GetGrappling();
 
 	void SetGrappling(bool NewGrappling);
+
+	FString GetBoardingStatus();
+
+	void SetBoardingStatus(FString NewBoardingStatus);
 
 
 	//void SetTargetEnemy(APawn* NewTarget);
