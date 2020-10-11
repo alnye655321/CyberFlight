@@ -10,7 +10,8 @@ AFlyingBot::AFlyingBot()
 	PrimaryActorTick.bCanEverTick = true;
 
 	FlightAcceleration = 5000.0f;
-	FlightMaxVelocity = 1000.0f;
+	//FlightMaxVelocity = 1000.0f;
+	FlightMaxVelocity = 2000.0f;
 	FlightLinearDamping = 5.0f;
 	FlightAngularDamping = 10.0f;
 

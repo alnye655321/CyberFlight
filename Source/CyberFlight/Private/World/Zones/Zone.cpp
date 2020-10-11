@@ -8,7 +8,7 @@
 AZone::AZone()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	ZoneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("ZoneRoot")); // initialize a component
 	RootComponent = ZoneRoot; // set the root component --> Collision primitive that defines the transform (location, rotation, scale) of this Actor
@@ -30,11 +30,11 @@ void AZone::BeginPlay()
 }
 
 // Called every frame
-void AZone::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
+//void AZone::Tick(float DeltaTime)
+//{
+//	Super::Tick(DeltaTime);
+//
+//}
 
 
 

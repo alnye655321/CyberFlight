@@ -25,6 +25,11 @@ class CYBERFLIGHT_API AFlyingAIController : public AAIController
 
 	virtual void OnUnPossess() override;
 
+	AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
+
+	UFUNCTION(BlueprintCallable, Category = Utility)
+	TArray<AActor*> SortedClosestSkyLanesByEntrance(TArray<AActor*> FoundActors);
+
 	UBehaviorTreeComponent* BehaviorComp;
 
 	UBlackboardComponent* BlackboardComp;
@@ -40,6 +45,15 @@ class CYBERFLIGHT_API AFlyingAIController : public AAIController
 
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
 		FName MoveToLocationKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+		FName CurrentSkyLaneKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+		FName AllowAccelerationKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+		FName MovementStatusKeyName;
 
 public:
 
@@ -60,6 +74,18 @@ public:
 	FVector GetMoveToLocation();
 
 	void SetMoveToLocation(FVector NewMoveToLocation);
+
+	AActor* GetCurrentSkyLane();
+
+	void SetCurrentSkyLane(AActor* NewCurrentSkyLane);
+
+	bool GetAllowAcceleration();
+
+	void SetAllowAcceleration(bool NewAllowAcceleration);
+
+	FString GetMovementStatus();
+
+	void SetMovementStatus(FString NewMovementStatus);
 
 	/** Returns BehaviorComp subobject **/
 	FORCEINLINE UBehaviorTreeComponent* GetBehaviorComp() const { return BehaviorComp; }
