@@ -21,13 +21,16 @@ public:
 
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
+	UFUNCTION()
+		void DelayAfterSensingCollision(AFlyingAIController* AIController);
+
 private:
 
 	AFlyingAIController* MyController;
 	AFlyingBot* MyFlyingBot;
-	int N;
-	int HitN;
 	FVector Start;
 	FVector End;
+	FTimerHandle SkyLaneTravelTimerHandle;
+	FTimerDelegate TimerDel; //predefine delegate to use with parameters
 	
 };
