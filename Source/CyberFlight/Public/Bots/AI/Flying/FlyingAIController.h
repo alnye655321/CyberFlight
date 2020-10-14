@@ -4,6 +4,7 @@
 
 #include "AIController.h"
 #include "Bots/AI/Flying/FlyingBot.h"
+#include "World/Zones/SkyTravelLane.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "FlyingAIController.generated.h"
 
@@ -28,7 +29,12 @@ class CYBERFLIGHT_API AFlyingAIController : public AAIController
 	AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
 
 	UFUNCTION(BlueprintCallable, Category = Utility)
+		FVector FindAMoveToSkyLaneLocation();
+
+	UFUNCTION(BlueprintCallable, Category = Utility)
 	TArray<AActor*> SortedClosestSkyLanesByEntrance(TArray<AActor*> FoundActors);
+
+	int FindSkyLaneIndex(ASkyTravelLane* MySkyTravelLane);
 
 	UBehaviorTreeComponent* BehaviorComp;
 

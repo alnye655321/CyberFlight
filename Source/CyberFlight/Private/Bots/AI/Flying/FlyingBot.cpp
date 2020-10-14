@@ -9,10 +9,15 @@ AFlyingBot::AFlyingBot()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	FlightAcceleration = 5000.0f;
+	//defaults
+	//FlightAcceleration = 5000.0f;
 	//FlightMaxVelocity = 1000.0f;
-	FlightMaxVelocity = 2000.0f;
-	FlightLinearDamping = 5.0f;
+	//FlightLinearDamping = 5.0f;
+	//FlightAngularDamping = 10.0f;
+
+	FlightAcceleration = 6000.0f;
+	FlightMaxVelocity = 1000.0f;
+	FlightLinearDamping = 2.0f;
 	FlightAngularDamping = 10.0f;
 
 }

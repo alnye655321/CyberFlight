@@ -32,6 +32,6 @@ void ASkyTravelLane::OnBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* O
 {
 	if (OtherActor)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Skylane Begin Overlapped Actor: %s"), *GetNameSafe(OtherActor));
+		//UE_LOG(LogTemp, Log, TEXT("Skylane Begin Overlapped Actor: %s"), *GetNameSafe(OtherActor));
 	}
 }

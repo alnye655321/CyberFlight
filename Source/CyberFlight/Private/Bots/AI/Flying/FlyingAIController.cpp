@@ -12,6 +12,9 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_String.h"
 #include <Engine.h>
+#include <CollisionShape.h>
+#include <CollisionQueryParams.h>
+#include "DrawDebugHelpers.h"
 
 
 AFlyingAIController::AFlyingAIController()
@@ -101,6 +104,67 @@ AActor* AFlyingAIController::GetClosestActorOfClass(TArray<AActor*> FoundActors)
 	return NearestActor;
 }
 
+FVector AFlyingAIController::FindAMoveToSkyLaneLocation()
+{
+	UE_LOG(LogTemp, Log, TEXT("Running FindAMoveToSkyLaneLocation"));
+	ASkyTravelLane* MyCurrentSkyLane = Cast<ASkyTravelLane>(GetCurrentSkyLane());
+
+	//TArray<AActor*> FoundSkyLanes;
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASkyTravelLane::StaticClass(), FoundSkyLanes);
+	//TArray<AActor*> SortedSkyLanes = SortedClosestSkyLanesByEntrance(FoundSkyLanes);
+
+	TArray<ASkyTravelLane*> MySkyTravelLanes;
+	TArray<FHitResult> OutHits;
+	FVector ActorLocation = FlyingBot->GetActorLocation();
+	FCollisionShape MyColSphere = FCollisionShape::MakeSphere(4000.0f);
+	DrawDebugSphere(GetWorld(), ActorLocation, MyColSphere.GetSphereRadius(), 100, FColor::Purple, false, 5); //true is persist in world, int is lifetime
+
+	bool isHit = GetWorld()->SweepMultiByChannel(OutHits, ActorLocation, ActorLocation, FQuat::Identity, ECC_Visibility, MyColSphere);
+
+	if (isHit)
+	{
+		// loop through TArray
+		for (FHitResult Hit : OutHits)
+		{
+			ASkyTravelLane* TestSkyTravelLane = Cast<ASkyTravelLane>(Hit.GetActor());
+
+			if (Hit.GetComponent() && TestSkyTravelLane)
+			{
+				FString ComponentName = Hit.GetComponent()->GetName();
+				//if ===SkyLaneEntranceBox
+				//then TestSkyTravelLane to array
+
+				if (ComponentName.Equals(FString(TEXT("SkyLaneEntranceBox"))))
+				{
+					MySkyTravelLanes.Add(TestSkyTravelLane);
+					UE_LOG(LogTemp, Log, TEXT("Entrace: %s exists on SkyTavelLane: %s"), *ComponentName, *GetNameSafe(TestSkyTravelLane));
+				}
+			}
+		}
+
+		if (MySkyTravelLanes.Num() > 0)
+		{
+			if (MySkyTravelLanes.Num() == 1)
+			{
+				SetCurrentSkyLane(MySkyTravelLanes[0]);
+				return MySkyTravelLanes[0]->SkyLaneEntrance->GetSocketLocation(TEXT("SkyLaneEntranceBox"));
+			}
+			else
+			{
+				int ReturnIndex = FMath::RandRange(0, MySkyTravelLanes.Num() - 1);
+				UE_LOG(LogTemp, Log, TEXT("Rand Index Chosen: %d"), ReturnIndex);
+				SetCurrentSkyLane(MySkyTravelLanes[ReturnIndex]);
+				return MySkyTravelLanes[ReturnIndex]->SkyLaneEntrance->GetSocketLocation(TEXT("SkyLaneEntranceBox"));
+			}
+		}
+
+	}
+
+	FVector vector;
+	return vector;
+
+}
+
 //trying to get nearest sky lane by closest start point, will be able to choose index 0 or 1 randomly for left and right turns
 TArray<AActor*> AFlyingAIController::SortedClosestSkyLanesByEntrance(TArray<AActor*> FoundActors)
 {
@@ -120,8 +184,23 @@ TArray<AActor*> AFlyingAIController::SortedClosestSkyLanesByEntrance(TArray<AAct
 	return FoundActors;
 }
 
+int AFlyingAIController::FindSkyLaneIndex(ASkyTravelLane* MySkyTravelLane)
+{
+
+	if (MySkyTravelLane->HasExitLeftTurn && MySkyTravelLane->HasExitRighttTurn)
+	{
+		return FMath::RandRange(0, 1); //choose a random left or right turn
+	}
+	else
+	{
+		return 0;
+	}
+
+}
+
 AActor* AFlyingAIController::GetTargetActor()
 {
+	
 	return nullptr;
 }
 
@@ -137,6 +216,15 @@ void AFlyingAIController::SetTargetActor(AActor* NewTargetActor)
 
 AActor* AFlyingAIController::GetSelfActor()
 {
+	if (BlackboardComp)
+	{
+		AActor* Self = Cast<AActor>(BlackboardComp->GetValueAsObject(SelfActorKeyName));
+		if (Self)
+		{
+			return Self;
+		}
+	}
+
 	return nullptr;
 }
 
@@ -184,6 +272,14 @@ void AFlyingAIController::SetMoveToLocation(FVector NewMoveToLocation)
 
 AActor* AFlyingAIController::GetCurrentSkyLane()
 {
+	if (BlackboardComp)
+	{
+		ASkyTravelLane* MyCurrentSkyLane = Cast<ASkyTravelLane>(BlackboardComp->GetValueAsObject(CurrentSkyLaneKeyName));
+		if (MyCurrentSkyLane)
+		{
+			return MyCurrentSkyLane;
+		}
+	}
 	return nullptr;
 }
 

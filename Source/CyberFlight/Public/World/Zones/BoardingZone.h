@@ -35,7 +35,7 @@ public:
 			void OnBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 		UFUNCTION()
-		void LandingCheckRepeating(AHeli* Heli);
+			void LandingCheckRepeating(AHeli* Heli);
 
 		UFUNCTION()
 		void BoardingCheckRepeating(AHeli* Heli);
