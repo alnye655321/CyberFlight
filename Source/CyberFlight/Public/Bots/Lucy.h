@@ -32,6 +32,9 @@ public:
 		bool Grappling;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool Walker;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		AActor* TargetActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
@@ -52,6 +55,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Utility)
 		AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Montage Animation")
+		void AnimateIdleInPlace();
 
 
 };

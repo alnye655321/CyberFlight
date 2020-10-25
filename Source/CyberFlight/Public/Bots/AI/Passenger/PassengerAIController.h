@@ -56,6 +56,12 @@ class CYBERFLIGHT_API APassengerAIController : public AAIController
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName BoardingStatusKeyName;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName WalkerKeyName;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName WalkerStatusKeyName;
+
 public:
 
 	//AActor* GetTargetActor() const;
@@ -63,6 +69,8 @@ public:
 	//ASBaseCharacter* GetTargetEnemy() const;
 
 	AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
+
+	TArray<AActor*> SortedActorsByDistance(FVector StartingLocation, TArray<AActor*> MyActors);
 
 	ALucy* LucyBot;
 
@@ -101,6 +109,14 @@ public:
 	FString GetBoardingStatus();
 
 	void SetBoardingStatus(FString NewBoardingStatus);
+
+	bool GetWalker();
+
+	void SetWalker(bool NewWalker);
+
+	FString GetWalkerStatus();
+
+	void SetWalkerStatus(FString NewWalkerStatus);
 
 
 	//void SetTargetEnemy(APawn* NewTarget);

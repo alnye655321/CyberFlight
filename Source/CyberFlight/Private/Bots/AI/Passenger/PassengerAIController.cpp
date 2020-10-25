@@ -32,6 +32,8 @@ APassengerAIController::APassengerAIController()
 	ClimbingKeyName = "Climbing";
 	GrapplingKeyName = "Grappling";
 	BoardingStatusKeyName = "BoardingStatus";
+	WalkerKeyName = "Walker";
+	WalkerStatusKeyName = "WalkerStatus";
 
 
 	/* Initializes PlayerState so we can assign a team index to AI */
@@ -57,7 +59,9 @@ void APassengerAIController::OnPossess(class APawn* InPawn)
 		UE_LOG(LogTemp, Log, TEXT("Behavior Tree Started"));
 
 
-		//using default values of LucyBots in level to tragger these actions
+		//using default values of LucyBots in level to tigger these actions
+		//these are values for starting the game / testing with, should not be assigned during play
+		//all play assignments should occur through AI controller
 		if (LucyBot->Rescue)
 		{
 			SetRescue(true);
@@ -76,6 +80,12 @@ void APassengerAIController::OnPossess(class APawn* InPawn)
 		if (LucyBot->TargetActor)
 		{
 			SetTargetActor(LucyBot->TargetActor);
+		}
+
+		if (LucyBot->Walker)
+		{
+			SetWalker(true);
+			SetWalkerStatus(TEXT("FindingIdleBotTarget"));
 		}
 				
 
@@ -115,6 +125,20 @@ AActor* APassengerAIController::GetClosestActorOfClass(TArray<AActor*> FoundActo
 		UE_LOG(LogTemp, Log, TEXT("Best Actor:  %s  --- Exists"), *GetNameSafe(NearestActor));
 	}
 	return NearestActor;
+}
+
+TArray<AActor*> APassengerAIController::SortedActorsByDistance(FVector StartingLocation, TArray<AActor*> MyActors)
+{
+
+	MyActors.Sort([StartingLocation](AActor& A, AActor& B) {
+		AActor* Y = &A;
+		AActor* Z = &B;
+		return (Y->GetActorLocation() - StartingLocation).SizeSquared()
+			< (Z->GetActorLocation() - StartingLocation).SizeSquared();
+		});
+
+	return MyActors;
+
 }
 
 AActor* APassengerAIController::GetTargetActor()
@@ -321,6 +345,47 @@ void APassengerAIController::SetBoardingStatus(FString NewBoardingStatus)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsString(BoardingStatusKeyName, NewBoardingStatus);
+	}
+}
+
+bool APassengerAIController::GetWalker()
+{
+	if (BlackboardComp)
+	{
+		return BlackboardComp->GetValueAsBool(WalkerKeyName);
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+void APassengerAIController::SetWalker(bool NewWalker)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsBool(WalkerKeyName, NewWalker);
+	}
+}
+
+FString APassengerAIController::GetWalkerStatus()
+{
+	if (BlackboardComp)
+	{
+		return BlackboardComp->GetValueAsString(WalkerStatusKeyName);
+	}
+	else
+	{
+		return "";
+	}
+
+}
+
+void APassengerAIController::SetWalkerStatus(FString NewWalkerStatus)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsString(WalkerStatusKeyName, NewWalkerStatus);
 	}
 }
 
