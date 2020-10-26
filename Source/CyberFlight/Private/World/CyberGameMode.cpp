@@ -7,7 +7,6 @@
 #include "Bots/Lucy.h"
 #include "Bots/AI/Passenger/PassengerAIController.h"
 #include <Engine.h>
-#include <Engine/SpotLight.h>
 
 ACyberGameMode::ACyberGameMode()
 {
@@ -30,8 +29,8 @@ void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
 			if (AIController && AIController->GetWalker())
 			{
 				TargetLucy = MyLucy;
-				TArray<UActorComponent*> ActorComponents = MyLucy->K2_GetComponentsByClass(ASpotLight::StaticClass());
-				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, ActorComponents[0]->GetName());
+				TargetLucy->CylinderComp->SetVisibility(true);
+				AIController->SetWalkerStatus("FindTaxiTarget");
 				break;
 			}
 		}

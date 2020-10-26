@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include <Components/SpotLightComponent.h>
+#include "Vehicle/Taxi.h"
 #include "Lucy.generated.h"
 
 UCLASS()
@@ -37,11 +37,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		AActor* TargetActor;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Refs")
+		ATaxi* TaxiRef;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool PlayingMontage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
-		USpotLightComponent* SpotLightComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Notification")
+		UStaticMeshComponent* CylinderComp;
 
 
 protected:
