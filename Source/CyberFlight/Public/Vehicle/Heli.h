@@ -4,11 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Vehicle/Vehicle.h"
 #include "World/Zones/Zone.h"
 #include "Heli.generated.h"
 
 UCLASS()
-class CYBERFLIGHT_API AHeli : public APawn
+class CYBERFLIGHT_API AHeli : public AVehicle
 {
 	GENERATED_BODY()
 

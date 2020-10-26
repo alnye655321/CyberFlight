@@ -5,6 +5,7 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "Bots/AI/Passenger/PassengerAIController.h"
 #include "Bots/Lucy.h"
+#include <Animation/AnimMontage.h>
 #include "BTTask_IdleInPlace.generated.h"
 
 /**
@@ -22,6 +23,9 @@ class CYBERFLIGHT_API UBTTask_IdleInPlace : public UBTTask_BlackboardBase
 public:
 	UFUNCTION()
 		void StopIdleMontage();
+
+	UPROPERTY()
+		UAnimMontage* MyMontage;
 
 private:
 	APassengerAIController* MyController;

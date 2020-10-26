@@ -9,6 +9,11 @@ ALucy::ALucy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SpotLightComp = CreateDefaultSubobject<USpotLightComponent>(TEXT("SpotLightComp"));
+	SpotLightComp->SetCastShadows(false);
+	//SpotLightComp->AddLocalRotation(FRotator(0, -90, 0));
+	SpotLightComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 }
 
 // Called when the game starts or when spawned

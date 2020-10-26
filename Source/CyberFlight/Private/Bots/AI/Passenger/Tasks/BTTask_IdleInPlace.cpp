@@ -5,10 +5,13 @@
 #include "Bots/Lucy.h"
 #include "Bots/IdleBotTarget.h"
 #include "Bots/AI/Passenger/PassengerAIController.h"
+#include <Animation/AnimInstance.h>
 
 UBTTask_IdleInPlace::UBTTask_IdleInPlace()
 {
 	bCreateNodeInstance = true;
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> MyMontageObj(TEXT("/Game/AnimStarterPack/Montages/Mon_Idle4"));
+	MyMontage = MyMontageObj.Object;
 }
 
 EBTNodeResult::Type UBTTask_IdleInPlace::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -16,7 +19,13 @@ EBTNodeResult::Type UBTTask_IdleInPlace::ExecuteTask(UBehaviorTreeComponent& Own
 	MyController = Cast<APassengerAIController>(OwnerComp.GetAIOwner());
 	MyLucy = Cast<ALucy>(MyController->GetPawn());
 
-	MyLucy->AnimateIdleInPlace(); //Play the montage from blueprints
+	UAnimInstance* AnimInst = MyLucy->GetMesh()->GetAnimInstance();
+	if (AnimInst)
+	{
+		AnimInst->Montage_Play(MyMontage);
+	}
+	//c++ blueprint implementable event, not need with direct playing above
+	//MyLucy->AnimateIdleInPlace(); //Play the montage from blueprints
 
 	float IdleTimeLength = FMath::RandRange(5.0f, 20.0f);
 
@@ -30,6 +39,8 @@ EBTNodeResult::Type UBTTask_IdleInPlace::ExecuteTask(UBehaviorTreeComponent& Own
 
 void UBTTask_IdleInPlace::StopIdleMontage()
 {
-	UE_LOG(LogTemp, Log, TEXT("Stopping Idle Montage and Finishing Task"));
+	MyLucy->StopAnimMontage();
 	MyController->SetWalkerStatus(TEXT("FindingIdleBotTarget"));
+
+	UE_LOG(LogTemp, Log, TEXT("Stopping Idle Montage and Finishing Task"));
 }

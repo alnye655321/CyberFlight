@@ -7,17 +7,40 @@
 #include "Bots/Lucy.h"
 #include "Bots/AI/Passenger/PassengerAIController.h"
 #include <Engine.h>
+#include <Engine/SpotLight.h>
 
 ACyberGameMode::ACyberGameMode()
 {
 	CompletedMissions = 0;
 }
 
+void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
+{
+	ALucy* TargetLucy;
+	TArray<AActor*> FoundActors;
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ALucy::StaticClass(), FoundActors);
+
+	if (FoundActors.Num() > 0 && Taxi) {
+		for (AActor* FoundActor : FoundActors)
+		{
+			ALucy* MyLucy = Cast<ALucy>(FoundActor);
+			APassengerAIController* AIController = Cast<APassengerAIController>(MyLucy->GetController());
+			//#TODO could add additional logic here for picking a specific Lucy target
+			if (AIController && AIController->GetWalker())
+			{
+				TargetLucy = MyLucy;
+				TArray<UActorComponent*> ActorComponents = MyLucy->K2_GetComponentsByClass(ASpotLight::StaticClass());
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, ActorComponents[0]->GetName());
+				break;
+			}
+		}
+	}
+}
+
 void ACyberGameMode::StartPersonTransport(AActor* Heli)
 {
 	AHeli* HeliPawn = Cast<AHeli>(Heli);
-
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "Start Boarding Mission");
 
 	//find a possible boarding area with NPCs waiting, according to map
 	bool FoundBoardingZone = false;
@@ -77,6 +100,7 @@ void ACyberGameMode::StartPersonTransport(AActor* Heli)
 
 	
 }
+
 
 bool ACyberGameMode::GetPersonTransportMissionActive()
 {

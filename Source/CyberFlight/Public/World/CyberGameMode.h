@@ -26,6 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Mission)
 		void StartPersonTransport(AActor* Heli);
 
+	UFUNCTION(BlueprintCallable, Category = Mission)
+		void StartTaxiTransport(AActor* Taxi);
+
 	bool GetPersonTransportMissionActive();
 
 	void SetPersonTransportMissionActive(bool NewPersonTransportMissionActive);

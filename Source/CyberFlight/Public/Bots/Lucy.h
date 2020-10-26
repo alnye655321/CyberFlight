@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <Components/SpotLightComponent.h>
 #include "Lucy.generated.h"
 
 UCLASS()
@@ -14,7 +15,6 @@ class CYBERFLIGHT_API ALucy : public ACharacter
 public:
 	// Sets default values for this character's properties
 	ALucy();
-
 
 	UPROPERTY(EditAnywhere, Category = Behavior)
 		class UBehaviorTree* BehaviorTree;
@@ -39,6 +39,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool PlayingMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Light")
+		USpotLightComponent* SpotLightComp;
 
 
 protected:
