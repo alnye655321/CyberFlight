@@ -61,7 +61,6 @@ void UBTTask_EnterTaxi::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	if (MyLucy && Alpha <= 1 && EndingLocation.Size() > 0)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Lerping!!!"));
 		FVector NewLocation = FMath::Lerp(StartingLocation, EndingLocation, Alpha);
 		
 		MyLucy->SetActorLocation(NewLocation);

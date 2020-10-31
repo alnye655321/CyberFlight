@@ -29,6 +29,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Mission)
 		void StartTaxiTransport(AActor* Taxi);
 
+	void StopTaxiTransport(bool Success);
+
 	bool GetPersonTransportMissionActive();
 
 	void SetPersonTransportMissionActive(bool NewPersonTransportMissionActive);

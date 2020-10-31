@@ -13,6 +13,7 @@ ACyberGameMode::ACyberGameMode()
 	CompletedMissions = 0;
 }
 
+//called from UI in blueprints
 void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
 {
 	ALucy* TargetLucy;
@@ -36,6 +37,11 @@ void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
 			}
 		}
 	}
+}
+
+void ACyberGameMode::StopTaxiTransport(bool Success)
+{
+	UE_LOG(LogTemp, Log, TEXT("Stopped Taxi Transport"));
 }
 
 void ACyberGameMode::StartPersonTransport(AActor* Heli)
