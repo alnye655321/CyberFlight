@@ -16,4 +16,12 @@ void UBTService_TaxiWaiting::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	MyController = Cast<APassengerAIController>(OwnerComp.GetAIOwner());
 	MyLucy = Cast<ALucy>(MyController->GetPawn());
 
+	//Parked being set from blueprints through getting HoverDistance data
+	if (MyLucy->TaxiRef->GetParked() 
+		&& ((MyLucy->GetActorLocation() - MyLucy->TaxiRef->GetActorLocation()).Size() < 2000.0))
+	{
+		MyController->SetWalkerStatus(TEXT("EnterTaxi"));
+		UE_LOG(LogTemp, Log, TEXT("Taxi Start Boarding!"));
+	}
+
 }

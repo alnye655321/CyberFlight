@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Vehicle/Taxi.h"
+#include "TaxiBotTarget.h"
 #include "Lucy.generated.h"
 
 UCLASS()
@@ -63,6 +64,14 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Montage Animation")
 		void AnimateIdleInPlace();
+
+	ATaxiBotTarget* GetChoosenTaxiBotTarget();
+
+	void SetChoosenTaxiBotTarget(ATaxiBotTarget* NewTaxiBotTarget);
+
+private:
+	
+	ATaxiBotTarget* ChoosenTaxiBotTarget;
 
 
 };

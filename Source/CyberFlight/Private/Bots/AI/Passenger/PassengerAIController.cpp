@@ -15,6 +15,7 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_String.h"
 #include <Engine.h>
+#include "Bots/TaxiBotTarget.h"
 
 
 APassengerAIController::APassengerAIController()
@@ -139,6 +140,19 @@ TArray<AActor*> APassengerAIController::SortedActorsByDistance(FVector StartingL
 
 	return MyActors;
 
+}
+
+ATaxiBotTarget* APassengerAIController::FindATaxiBotTargetDestination()
+{
+	TArray<AActor*> TaxiBotTargets;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATaxiBotTarget::StaticClass(), TaxiBotTargets);
+	TArray<AActor*> SortedTaxiBotTargets = SortedActorsByDistance(LucyBot->GetActorLocation(), TaxiBotTargets);
+
+	int RandIndex = FMath::RandRange(2, TaxiBotTargets.Num() - 1);
+
+	ATaxiBotTarget* MyTaxiBotTarget = Cast<ATaxiBotTarget>(TaxiBotTargets[RandIndex]);
+
+	return MyTaxiBotTarget;
 }
 
 AActor* APassengerAIController::GetTargetActor()

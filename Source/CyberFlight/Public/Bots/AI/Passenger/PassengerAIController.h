@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Bots/Lucy.h"
+#include "Bots/TaxiBotTarget.h"
 #include "PassengerAIController.generated.h"
 
 class UBehaviorTreeComponent;
@@ -71,6 +72,8 @@ public:
 	AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
 
 	TArray<AActor*> SortedActorsByDistance(FVector StartingLocation, TArray<AActor*> MyActors);
+
+	ATaxiBotTarget* FindATaxiBotTargetDestination();
 
 	ALucy* LucyBot;
 

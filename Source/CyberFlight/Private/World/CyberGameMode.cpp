@@ -28,6 +28,7 @@ void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
 			//#TODO could add additional logic here for picking a specific Lucy target
 			if (AIController && AIController->GetWalker())
 			{
+				UE_LOG(LogTemp, Log, TEXT("Starting Taxi Transport"));
 				TargetLucy = MyLucy;
 				TargetLucy->CylinderComp->SetVisibility(true);
 				AIController->SetWalkerStatus("FindTaxiTarget");

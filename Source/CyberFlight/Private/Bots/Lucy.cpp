@@ -61,3 +61,13 @@ AActor* ALucy::GetClosestActorOfClass(TArray<AActor*> FoundActors)
 	return NearestActor;
 }
 
+ATaxiBotTarget* ALucy::GetChoosenTaxiBotTarget()
+{
+	return this->ChoosenTaxiBotTarget;
+}
+
+void ALucy::SetChoosenTaxiBotTarget(ATaxiBotTarget* NewTaxiBotTarget)
+{
+	this->ChoosenTaxiBotTarget = NewTaxiBotTarget;
+}
+

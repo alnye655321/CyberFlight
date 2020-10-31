@@ -17,7 +17,23 @@ class CYBERFLIGHT_API ATaxi : public AVehicle
 public:
 	ATaxi();
 
+	UFUNCTION(BlueprintCallable, Category = Mission)
+		void SetParked(bool NewParked);
+
+	UFUNCTION(BlueprintCallable, Category = Mission)
+		bool GetParked();
+
+	//UPROPERTY(EditAnywhere)
+	//	USceneComponent* TaxiRoot;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Target")
+	//	UStaticMeshComponent* LeftDoorEntryTarget;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+private:
+	bool Parked; //Parked being set from blueprints through getting HoverDistance data
+
 };
