@@ -3,6 +3,7 @@
 
 #include "World/Zones/RescueZone.h"
 #include "Components/BoxComponent.h"
+#include <Logging/LogMacros.h>
 
 ARescueZone::ARescueZone()
 {
@@ -30,7 +31,7 @@ void ARescueZone::OnBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 {
 	if (OtherActor)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "RescueZoneOverlap: " + OtherActor->GetName());
+		UE_LOG(LogTemp, Log, TEXT("Actor:  %s  --- Is overlapping Rescue ZOne Exists"), *GetNameSafe(OtherActor));
 	}
 	
 }

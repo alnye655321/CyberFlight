@@ -8,6 +8,7 @@ AHeli::AHeli()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//PrimaryActorTick.bCanEverTick = true;
+	SetLadderDeployed(false);
 
 }
 
@@ -76,5 +77,15 @@ bool AHeli::GetBackDoorOpened()
 void AHeli::SetBackDoorOpened(bool NewBackDoorOpened)
 {
 	this->BackDoorOpened = NewBackDoorOpened;
+}
+
+bool AHeli::GetLadderDeployed()
+{
+	return this->LadderDeployed;
+}
+
+void AHeli::SetLadderDeployed(bool NewLadderDeployed)
+{
+	this->LadderDeployed = NewLadderDeployed;
 }
 

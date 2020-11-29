@@ -5,7 +5,7 @@
 #include "World/CyberGameMode.h"
 #include "Vehicle/Heli.h"
 #include "Bots/Lucy.h"
-#include "Bots/AI/Passenger/PassengerAIController.h"
+#include "Bots/AI/Npc/NpcAIController.h"
 #include "Components/BoxComponent.h"
 
 ABoardingZone::ABoardingZone()
@@ -73,7 +73,7 @@ void ABoardingZone::LandingCheckRepeating(AHeli* Heli)
 				ALucy* LucyBotTest = Cast<ALucy>(ActorsAttachedToHeli[i]);
 				if (LucyBotTest)
 				{
-					APassengerAIController* AIController = Cast<APassengerAIController>(LucyBotTest->GetController());
+					ANpcAIController* AIController = Cast<ANpcAIController>(LucyBotTest->GetController());
 					if (AIController)
 					{
 						FString BoardingStatusStr = FString(TEXT("ExitHeli"));
@@ -106,11 +106,13 @@ void ABoardingZone::BoardingCheckRepeating(AHeli* Heli)
 				ALucy* LucyBotTest = Cast<ALucy>(Overlaps[i]);
 				if (LucyBotTest)
 				{
-					APassengerAIController* AIController = Cast<APassengerAIController>(LucyBotTest->GetController());
+					ANpcAIController* AIController = Cast<ANpcAIController>(LucyBotTest->GetController());
 					if (AIController)
 					{
-						FString BoardingStatusStr = FString(TEXT("MoveIntoHeli"));
-						AIController->SetBoardingStatus(BoardingStatusStr);
+						//FString HeliRidingStr = FString(TEXT("MoveIntoHeli"));
+						AIController->SetBoarding(false);
+						AIController->SetHeliRidingStatus(TEXT("Init"));
+						AIController->SetHeliRiding(true);
 						UE_LOG(LogTemp, Log, TEXT("Boarding has started for transport mission! Heli: %s"), *GetNameSafe(Heli));
 					}
 				}

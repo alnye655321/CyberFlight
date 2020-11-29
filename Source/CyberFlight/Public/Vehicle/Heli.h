@@ -47,6 +47,16 @@ public:
 
 	void SetBackDoorOpened(bool NewBackDoorOpened);
 
+	UFUNCTION(BlueprintCallable, Category = Ladder)
+		bool GetLadderDeployed();
+
+	UFUNCTION(BlueprintCallable, Category = Ladder)
+		void SetLadderDeployed(bool NewLadderDeployed);
+
+private:
+
+	bool LadderDeployed;
+
 
 
 

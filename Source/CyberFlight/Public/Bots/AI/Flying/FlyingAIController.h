@@ -6,6 +6,7 @@
 #include "Bots/AI/Flying/FlyingBot.h"
 #include "World/Zones/SkyTravelLane.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "../CyberAIController.h"
 #include "FlyingAIController.generated.h"
 
 class UBehaviorTreeComponent;
@@ -15,7 +16,7 @@ class UBlackboardComponent;
  *
  */
 UCLASS()
-class CYBERFLIGHT_API AFlyingAIController : public AAIController
+class CYBERFLIGHT_API AFlyingAIController : public ACyberAIController
 {
 	GENERATED_BODY()
 
@@ -25,8 +26,6 @@ class CYBERFLIGHT_API AFlyingAIController : public AAIController
 	virtual void OnPossess(class APawn* InPawn) override;
 
 	virtual void OnUnPossess() override;
-
-	AActor* GetClosestActorOfClass(TArray<AActor*> FoundActors);
 
 	UFUNCTION(BlueprintCallable, Category = Utility)
 		FVector FindAMoveToSkyLaneLocation();

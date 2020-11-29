@@ -57,7 +57,7 @@ void AFlyingAIController::OnPossess(class APawn* InPawn)
 		TArray<AActor*> FoundActors;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASkyTravelLane::StaticClass(), FoundActors);
 
-		AActor* ClosestSkyTravelLane = GetClosestActorOfClass(FoundActors);
+		AActor* ClosestSkyTravelLane = GetClosestActorOfClass(FoundActors, FlyingBot->GetActorLocation());
 
 		if (ClosestSkyTravelLane)
 		{
@@ -78,31 +78,7 @@ void AFlyingAIController::OnUnPossess()
 	BehaviorComp->StopTree();
 }
 
-AActor* AFlyingAIController::GetClosestActorOfClass(TArray<AActor*> FoundActors)
-{
-	const FVector MyLoc = FlyingBot->GetActorLocation();
-	float BestDistSq = MAX_FLT;
-	AActor* NearestActor = NULL;
 
-	if (FoundActors.Num() > 0)
-	{
-		for (AActor* FoundActor : FoundActors)
-		{
-			if (FoundActor)
-			{
-				const float DistSq = (FoundActor->GetActorLocation() - MyLoc).SizeSquared();
-				if (DistSq < BestDistSq)
-				{
-					BestDistSq = DistSq;
-					NearestActor = FoundActor;
-				}
-			}
-		}
-
-		UE_LOG(LogTemp, Log, TEXT("Best Actor:  %s  --- Exists"), *GetNameSafe(NearestActor));
-	}
-	return NearestActor;
-}
 
 FVector AFlyingAIController::FindAMoveToSkyLaneLocation()
 {

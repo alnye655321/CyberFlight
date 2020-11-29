@@ -5,7 +5,7 @@
 #include "World/Zones/BoardingZone.h"
 #include "Vehicle/Heli.h"
 #include "Bots/Lucy.h"
-#include "Bots/AI/Passenger/PassengerAIController.h"
+#include "Bots/AI/Npc/NpcAIController.h"
 #include <Engine.h>
 
 ACyberGameMode::ACyberGameMode()
@@ -22,19 +22,15 @@ void ACyberGameMode::StartTaxiTransport(AActor* Taxi)
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ALucy::StaticClass(), FoundActors);
 
 	if (FoundActors.Num() > 0 && Taxi) {
-		for (AActor* FoundActor : FoundActors)
+		ALucy* MyLucy = Cast<ALucy>(FoundActors[FMath::FRandRange(0, FoundActors.Num() - 1)]);
+		ANpcAIController* AIController = Cast<ANpcAIController>(MyLucy->GetController());
+		//#TODO could add additional logic here for picking a specific Lucy target
+		if (AIController && AIController->GetWalker())
 		{
-			ALucy* MyLucy = Cast<ALucy>(FoundActor);
-			APassengerAIController* AIController = Cast<APassengerAIController>(MyLucy->GetController());
-			//#TODO could add additional logic here for picking a specific Lucy target
-			if (AIController && AIController->GetWalker())
-			{
-				UE_LOG(LogTemp, Log, TEXT("Starting Taxi Transport"));
-				TargetLucy = MyLucy;
-				TargetLucy->CylinderComp->SetVisibility(true);
-				AIController->SetWalkerStatus("FindTaxiTarget");
-				break;
-			}
+			UE_LOG(LogTemp, Log, TEXT("Starting Taxi Transport"));
+			TargetLucy = MyLucy;
+			TargetLucy->CylinderComp->SetVisibility(true);
+			AIController->SetWalkerStatus("FindTaxiTarget");
 		}
 	}
 }
@@ -67,7 +63,7 @@ void ACyberGameMode::StartPersonTransport(AActor* Heli)
 					ALucy* LucyBotTest = Cast<ALucy>(Overlaps[i]);
 					if (LucyBotTest)
 					{
-						APassengerAIController* AIController = Cast<APassengerAIController>(LucyBotTest->GetController());
+						ANpcAIController* AIController = Cast<ANpcAIController>(LucyBotTest->GetController());
 
 						if (AIController)
 						{
