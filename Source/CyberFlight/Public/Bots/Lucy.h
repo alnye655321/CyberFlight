@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Vehicle/Taxi.h"
 #include "TaxiBotTarget.h"
+#include "Bots/BasicHumanMovement.h"
 #include "Lucy.generated.h"
 
 UCLASS()
@@ -36,10 +37,17 @@ public:
 		bool Walker;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+		bool Stop;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		AActor* TargetActor;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Refs")
 		ATaxi* TaxiRef;
+
+	//will be set to animation blueprint (anim instance) in blueprints
+	UPROPERTY(BlueprintReadWrite, Category = "Animation")
+		TScriptInterface<IBasicHumanMovement> MyBasicHumanMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 		bool PlayingMontage;
@@ -68,6 +76,7 @@ public:
 	ATaxiBotTarget* GetChoosenTaxiBotTarget();
 
 	void SetChoosenTaxiBotTarget(ATaxiBotTarget* NewTaxiBotTarget);
+
 
 private:
 	

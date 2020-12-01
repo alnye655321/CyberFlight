@@ -71,3 +71,4 @@ void ALucy::SetChoosenTaxiBotTarget(ATaxiBotTarget* NewTaxiBotTarget)
 	this->ChoosenTaxiBotTarget = NewTaxiBotTarget;
 }
 
+

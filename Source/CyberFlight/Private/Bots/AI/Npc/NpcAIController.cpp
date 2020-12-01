@@ -93,9 +93,15 @@ void ANpcAIController::OnPossess(class APawn* InPawn)
 			SetWalker(true);
 			SetWalkerStatus(TEXT("FindingIdleBotTarget"));
 		}
+
+		if (LucyBot->Stop)
+		{
+			SetStop(true);
+		}
 		
-		//SetHeliRiding(true); //#TODO testing, remove
-		//SetHeliRidingStatus(TEXT("Init")); //#TODO testing, remove
+		//helicopter riding test
+		//SetHeliRiding(true);
+		//SetHeliRidingStatus(TEXT("Init"));
 
 	}
 }
