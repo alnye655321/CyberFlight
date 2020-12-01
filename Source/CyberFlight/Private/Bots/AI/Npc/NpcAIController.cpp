@@ -100,8 +100,8 @@ void ANpcAIController::OnPossess(class APawn* InPawn)
 		}
 		
 		//helicopter riding test
-		//SetHeliRiding(true);
-		//SetHeliRidingStatus(TEXT("Init"));
+		SetHeliRiding(true);
+		SetHeliRidingStatus(TEXT("Init"));
 
 	}
 }
