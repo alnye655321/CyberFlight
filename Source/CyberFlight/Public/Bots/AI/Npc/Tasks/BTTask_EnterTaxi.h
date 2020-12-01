@@ -5,7 +5,6 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "Bots/AI/Npc/NpcAIController.h"
 #include "Bots/Lucy.h"
-#include <Animation/AnimMontage.h>
 #include "BTTask_EnterTaxi.generated.h"
 
 /**
@@ -25,9 +24,6 @@ public:
 
 	void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
 
-	UPROPERTY()
-		UAnimMontage* MyMontage;
-	
 
 private:
 	ANpcAIController* MyController;

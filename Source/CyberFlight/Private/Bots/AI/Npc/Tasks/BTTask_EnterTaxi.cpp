@@ -7,6 +7,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include <Kismet/GameplayStatics.h>
 #include <Animation/AnimInstance.h>
+#include "Bots/BasicHumanMovement.h"
 #include "Bots/TaxiBotTarget.h"
 
 UBTTask_EnterTaxi::UBTTask_EnterTaxi()
@@ -15,8 +16,6 @@ UBTTask_EnterTaxi::UBTTask_EnterTaxi()
 	bNotifyTick = true;
 	Alpha = 0.0f;
 
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> MyMontageObj(TEXT("/Game/AnimStarterPack/Montages/Mon_EnterTaxiLeft"));
-	MyMontage = MyMontageObj.Object;
 }
 
 EBTNodeResult::Type UBTTask_EnterTaxi::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -76,7 +75,14 @@ void UBTTask_EnterTaxi::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 			NewRotation.Yaw = NewRotation.Yaw - 90.0f;
 			MyLucy->SetActorRotation(NewRotation);
 			
-			AnimInst->Montage_Play(MyMontage); //entering taxi and sitting down loop
+			//entering taxi and sitting down loop
+			if (AnimInst->GetClass()->ImplementsInterface(UBasicHumanMovement::StaticClass()))
+			{
+				IBasicHumanMovement* MyBasicMovement = Cast<IBasicHumanMovement>(AnimInst);
+				MyBasicMovement->Execute_EnterTaxiLeft(AnimInst);
+			}
+
+
 			FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::KeepWorldTransform;
 			AttachmentRules.bWeldSimulatedBodies = true;
 

@@ -4,14 +4,13 @@
 #include "Bots/AI/Npc/Tasks/BTTask_IdleInPlace.h"
 #include "Bots/Lucy.h"
 #include "Bots/IdleBotTarget.h"
-#include "Bots/AI/Npc/NpcAIController.h"
+#include "Bots/BasicHumanMovement.h"
 #include <Animation/AnimInstance.h>
+#include "Bots/AI/Npc/NpcAIController.h"
 
 UBTTask_IdleInPlace::UBTTask_IdleInPlace()
 {
 	bCreateNodeInstance = true;
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> MyMontageObj(TEXT("/Game/AnimStarterPack/Montages/Mon_Idle4"));
-	MyMontage = MyMontageObj.Object;
 }
 
 EBTNodeResult::Type UBTTask_IdleInPlace::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -22,10 +21,18 @@ EBTNodeResult::Type UBTTask_IdleInPlace::ExecuteTask(UBehaviorTreeComponent& Own
 	UAnimInstance* AnimInst = MyLucy->GetMesh()->GetAnimInstance();
 	if (AnimInst)
 	{
-		AnimInst->Montage_Play(MyMontage);
+		if (AnimInst->GetClass()->ImplementsInterface(UBasicHumanMovement::StaticClass()))
+		{
+			IBasicHumanMovement* MyBasicMovement = Cast<IBasicHumanMovement>(AnimInst);
+			MyBasicMovement->Execute_StandingIdleWithLoop(AnimInst);
+		}
 	}
-	//c++ blueprint implementable event, not need with direct playing above
-	//MyLucy->AnimateIdleInPlace(); //Play the montage from blueprints
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("No Anim Instance Present!"));
+	}
+
+	//MyLucy->AnimateIdleInPlace(); //Play the montage from blueprint event test
 
 	float IdleTimeLength = FMath::RandRange(5.0f, 20.0f);
 

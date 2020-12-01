@@ -50,7 +50,7 @@ public:
 		TScriptInterface<IBasicHumanMovement> MyBasicHumanMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
-		bool PlayingMontage;
+		bool PlayingMontage; //#TODO don't really need this anymore, can always just check if montage is playing
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Notification")
 		UStaticMeshComponent* CylinderComp;

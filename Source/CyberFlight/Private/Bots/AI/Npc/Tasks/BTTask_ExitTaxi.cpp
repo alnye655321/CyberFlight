@@ -7,14 +7,12 @@
 #include "Kismet/KismetMathLibrary.h"
 #include <Kismet/GameplayStatics.h>
 #include <Animation/AnimInstance.h>
+#include "Bots/BasicHumanMovement.h"
 #include "World/CyberGameMode.h"
 
 UBTTask_ExitTaxi::UBTTask_ExitTaxi()
 {
 	bCreateNodeInstance = true;
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> MyMontageObj(TEXT("/Game/AnimStarterPack/Montages/Mon_ExitTaxiLeft"));
-	MyMontage = MyMontageObj.Object;
-
 }
 
 EBTNodeResult::Type UBTTask_ExitTaxi::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -30,7 +28,15 @@ EBTNodeResult::Type UBTTask_ExitTaxi::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	UAnimInstance* AnimInst = MyLucy->GetMesh()->GetAnimInstance();
 	if (AnimInst)
 	{
-		AnimInst->Montage_Play(MyMontage); //exiting taxi and Walking a few steps forward
+		if (AnimInst->GetClass()->ImplementsInterface(UBasicHumanMovement::StaticClass()))
+		{
+			IBasicHumanMovement* MyBasicMovement = Cast<IBasicHumanMovement>(AnimInst);
+			MyBasicMovement->Execute_ExitTaxiLeft(AnimInst);
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("No Anim Instance Present!"));
 	}
 
 	FTimerDelegate TimerDel; //predefine delegate to use with parameters

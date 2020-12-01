@@ -5,7 +5,6 @@
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "Bots/AI/Npc/NpcAIController.h"
 #include "Bots/Lucy.h"
-#include <Animation/AnimMontage.h>
 #include "BTTask_ExitTaxi.generated.h"
 
 /**
@@ -27,9 +26,6 @@ public:
 
 	UFUNCTION()
 		void StopExitMontage();
-
-	UPROPERTY()
-		UAnimMontage* MyMontage;
 
 
 private:

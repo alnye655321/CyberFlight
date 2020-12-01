@@ -27,4 +27,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Walking)
 		float WalkForwardWithLoop();
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Standing)
+		float StandingIdleWithLoop();
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Taxi)
+		float EnterTaxiLeft();
+
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Taxi)
+		float ExitTaxiLeft();
 };
